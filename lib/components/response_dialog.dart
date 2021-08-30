@@ -36,7 +36,7 @@ class ResponseDialog extends StatelessWidget {
                 color: colorIcon,
               ),
             ),
-            visible: icon != null,
+            visible: true,
           ),
           Visibility(
             child: Padding(
@@ -54,7 +54,7 @@ class ResponseDialog extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        FlatButton(
+        ElevatedButton(
           child: Text(buttonText),
           onPressed: () => Navigator.pop(context),
         )

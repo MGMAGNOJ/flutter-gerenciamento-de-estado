@@ -23,7 +23,7 @@ class TransactionForm extends StatefulWidget {
 class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
   final TransactionWebClient _transactionWebClient = TransactionWebClient();
-  final _ScaffoldState = GlobalKey<ScaffoldState>();
+  final _scaffoldState = GlobalKey<ScaffoldState>();
 
 
   // gerador de UUID;
@@ -36,7 +36,7 @@ class _TransactionFormState extends State<TransactionForm> {
   Widget build(BuildContext context) {
     print('Transaction Form ID: $transactionId');
     return Scaffold(
-      key: _ScaffoldState,
+      key: _scaffoldState,
       appBar: AppBar(
         title: Text('New transaction'),
       ),
@@ -168,27 +168,27 @@ class _TransactionFormState extends State<TransactionForm> {
         // Get de erro específico
         .catchError((e) {
       // Criando erros para o Firebase Analisando na WEB
-      _FirebaseTWC(e, transactionCreated);
+      _firebaseTWC(e, transactionCreated);
 
-      _ShowFailMessage(context, mensagem: 'Timeout HTTP');
+      _showFailMessage(context, mensagem: 'Timeout HTTP');
     }, test: (e) => e is TimeoutException)
         // Get de erro mais geral.
         .catchError((e) {
       // Criando erros para o Firebase Analisando na WEB
-      _FirebaseTWC(e, transactionCreated);
-      _ShowFailMessage(context, mensagem: e.toString());
+      _firebaseTWC(e, transactionCreated);
+      _showFailMessage(context, mensagem: e.toString());
     }, test: (e) => e is Exception)
         // Get Genérico dos erros
         .catchError((e) {
       // Criando erros para o Firebase Analisando na WEB
-      _FirebaseTWC(e, transactionCreated);
-      _ShowFailMessage(context);
+      _firebaseTWC(e, transactionCreated);
+      _showFailMessage(context);
     });
     return transaction;
   }
 
   // Gera o Erro do Firebase
-  void _FirebaseTWC(e, Transaction transactionCreated) {
+  void _firebaseTWC(e, Transaction transactionCreated) {
     if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
       // Criando erros para o Firebase Analisando na WEB
       FirebaseCrashlytics.instance.setCustomKey('HTTPError', e.toString());
@@ -198,7 +198,7 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
-  void _ShowFailMessage (BuildContext context,
+  void _showFailMessage (BuildContext context,
       {String mensagem = 'Erro desconhecido'}) {
 
     final _snackBar = SnackBar(content: Text(mensagem));

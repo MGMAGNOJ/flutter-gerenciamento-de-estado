@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:alura_crashlytics/models/transaction.dart';
 import 'package:alura_crashlytics/web-api/webclient.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
 class TransactionWebClient {
@@ -38,11 +37,11 @@ class TransactionWebClient {
           return Transaction.fromJson(jsonDecode(response.body));
         }
       default:
-        if (_HTTPStatusResponses[response.statusCode] != null){
+        if (_httpStatusResponses[response.statusCode] != null){
 
 
 
-          throw Exception(_HTTPStatusResponses[response.statusCode]);
+          throw Exception(_httpStatusResponses[response.statusCode]);
         } else {
           throw Exception(response.statusCode);
         }
@@ -50,7 +49,7 @@ class TransactionWebClient {
     }
   }
 
-  static final Map<int, String> _HTTPStatusResponses = {
+  static final Map<int, String> _httpStatusResponses = {
     400: 'Campo faltante',
     401: 'Senha incorreta',
     409: 'Transação duplicada',
