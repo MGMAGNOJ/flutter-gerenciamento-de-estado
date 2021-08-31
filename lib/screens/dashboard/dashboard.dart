@@ -1,3 +1,5 @@
+import 'package:alura_crashlytics/models/saldo.dart';
+import 'package:alura_crashlytics/screens/dashboard/saldo.dart';
 import 'package:alura_crashlytics/screens/contacts_list/contacts_list.dart';
 import 'package:alura_crashlytics/screens/transactions_list/transactions_list.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,10 @@ class _DashboardState extends State<Dashboard> {
         // Alinhamento Horizontal
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Align(
+            alignment: Alignment.topCenter,
+            child: SaldoCard(Saldo(32.0)),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset("images/bytebank_logo.png"),
