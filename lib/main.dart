@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:alura_crashlytics/models/saldo.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:alura_crashlytics/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as Foundation;
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Add this
@@ -15,7 +17,12 @@ void main() async {
   if (Foundation.kDebugMode) {
     print("App in debug mode");
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-    runApp(MyApp());
+    runApp(
+      ChangeNotifierProvider(
+        create: (context) => Saldo(10),
+        child: MyApp(),
+      ),
+    );
   }
 
   // Main do APP Production
@@ -28,7 +35,12 @@ void main() async {
       FirebaseCrashlytics.instance.setUserIdentifier("mario.magno");
       // Pass all uncaught errors from the framework to Crashlytics.
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-      runApp(MyApp());
+      runApp(
+        ChangeNotifierProvider(
+          create: (context) => Saldo(0),
+          child: MyApp(),
+        ),
+      );
     },
         (error, stack) =>
             FirebaseCrashlytics.instance.recordError(error, stack));

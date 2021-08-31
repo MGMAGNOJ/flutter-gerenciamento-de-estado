@@ -24,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
         children: <Widget>[
           Align(
             alignment: Alignment.topCenter,
-            child: SaldoCard(Saldo(32.0)),
+            child: SaldoCard(),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
