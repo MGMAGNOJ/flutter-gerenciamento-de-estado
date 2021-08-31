@@ -1,4 +1,3 @@
-import 'package:alura_crashlytics/models/saldo.dart';
 import 'package:alura_crashlytics/screens/dashboard/saldo.dart';
 import 'package:alura_crashlytics/screens/contacts_list/contacts_list.dart';
 import 'package:alura_crashlytics/screens/transactions_list/transactions_list.dart';
