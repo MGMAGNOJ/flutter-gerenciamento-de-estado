@@ -1,7 +1,7 @@
 import 'package:alura_crashlytics/database/dao/contatos_dao.dart';
 import 'package:alura_crashlytics/models/contatos.dart';
-import 'package:alura_crashlytics/screens/forms/contact_form.dart';
-import 'package:alura_crashlytics/screens/forms/transaction_form.dart';
+import 'package:alura_crashlytics/screens/forms/frm_contato.dart';
+import 'package:alura_crashlytics/screens/forms/frm_transacao.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatefulWidget {
