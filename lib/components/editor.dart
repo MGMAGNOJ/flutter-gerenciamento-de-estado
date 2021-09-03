@@ -23,7 +23,8 @@ class Editor extends StatelessWidget {
         style: TextStyle(fontSize: 24.0),
         decoration: InputDecoration(
           //  Testar nulo em um parametro
-          icon: icone != null ? Icon(icone) : null,
+          //icon: icone != null ? Icon(icone) : null,
+          icon: Icon(icone),
           labelText: rotulo,
           hintText: dica,
         ),

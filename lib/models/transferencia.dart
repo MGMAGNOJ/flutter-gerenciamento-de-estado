@@ -1,17 +1,17 @@
 import 'package:alura_crashlytics/models/contatos.dart';
 
-class Transaction {
+class Transferencia {
   final String id;
   final double value;
   final Contato contact;
 
-  Transaction(
+  Transferencia(
     this.id,
     this.value,
     this.contact,
   );
 
-  Transaction.fromJson(Map<String, dynamic> json)
+  Transferencia.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         value = json['value'],
         contact = Contato.fromJson(json['contact']);

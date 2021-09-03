@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:alura_crashlytics/models/transaction.dart';
+import 'package:alura_crashlytics/models/transferencia.dart';
 import 'package:alura_crashlytics/web-api/webclient.dart';
 import 'package:http/http.dart';
 
 class TransactionWebClient {
-  Future<List<Transaction>> findAll() async {
+  Future<List<Transferencia>> findAll() async {
     // Verificação do timeout da rede IMPORTANTE
     final Response response = await client.get(url).timeout(
           Duration(seconds: 3),
@@ -13,11 +13,11 @@ class TransactionWebClient {
 
     final List<dynamic> decodeJson = jsonDecode(response.body);
     return decodeJson.map((dynamic json) {
-      return Transaction.fromJson(json);
+      return Transferencia.fromJson(json);
     }).toList();
   }
 
-  Future<Transaction?> save(Transaction transaction, String password) async {
+  Future<Transferencia?> save(Transferencia transaction, String password) async {
     final String transactionJson = jsonEncode(transaction.toJson());
 
     await Future.delayed(Duration(seconds: 10));
@@ -34,7 +34,7 @@ class TransactionWebClient {
     switch (response.statusCode) {
       case 200:
         {
-          return Transaction.fromJson(jsonDecode(response.body));
+          return Transferencia.fromJson(jsonDecode(response.body));
         }
       default:
         if (_httpStatusResponses[response.statusCode] != null){

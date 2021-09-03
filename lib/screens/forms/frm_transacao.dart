@@ -5,7 +5,7 @@ import 'package:alura_crashlytics/components/response_dialog.dart';
 import 'package:alura_crashlytics/components/waiting.dart';
 import 'package:alura_crashlytics/http/web_clients/transaction_webclient.dart';
 import 'package:alura_crashlytics/models/contatos.dart';
-import 'package:alura_crashlytics/models/transaction.dart';
+import 'package:alura_crashlytics/models/transferencia.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -94,7 +94,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       final double? value =
                           double.tryParse(_valueController.text);
                       if (value != null) {
-                        final transactionCreated = Transaction(
+                        final transactionCreated = Transferencia(
                           transactionId,
                           value,
                           widget.contato,
@@ -127,7 +127,7 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   void _save(
-    Transaction transactionCreated,
+    Transferencia transactionCreated,
     String password,
     BuildContext context,
   ) async {
@@ -136,7 +136,7 @@ class _TransactionFormState extends State<TransactionForm> {
       _boolProcessando = true;
     });
     // Processa a transação
-    Transaction? transaction = await _send(
+    Transferencia? transaction = await _send(
       transactionCreated,
       password,
       context,
@@ -158,9 +158,9 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
-  Future<Transaction?> _send(Transaction transactionCreated, String password,
+  Future<Transferencia?> _send(Transferencia transactionCreated, String password,
       BuildContext context) async {
-    final Transaction? transaction = await _transactionWebClient
+    final Transferencia? transaction = await _transactionWebClient
         .save(
       transactionCreated,
       password,
@@ -188,7 +188,7 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   // Gera o Erro do Firebase
-  void _firebaseTWC(e, Transaction transactionCreated) {
+  void _firebaseTWC(e, Transferencia transactionCreated) {
     if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
       // Criando erros para o Firebase Analisando na WEB
       FirebaseCrashlytics.instance.setCustomKey('HTTPError', e.toString());

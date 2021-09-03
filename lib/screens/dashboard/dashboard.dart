@@ -1,10 +1,9 @@
-import 'package:alura_crashlytics/models/saldo.dart';
+import 'package:alura_crashlytics/cofiguration/constants.dart';
 import 'package:alura_crashlytics/screens/dashboard/saldo.dart';
 import 'package:alura_crashlytics/screens/contacts_list/contacts_list.dart';
 import 'package:alura_crashlytics/screens/forms/frm_deposito.dart';
 import 'package:alura_crashlytics/screens/transactions_list/transactions_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -24,22 +23,27 @@ class _DashboardState extends State<Dashboard> {
             alignment: Alignment.topCenter,
             child: SaldoCard(),
           ),
-          Consumer<Saldo>(
-            builder: (context, saldo, childo) {
-              return ElevatedButton(
-                  child: Text('Adiciona'),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return FrmDeposito();
-                    }));
-                  });
-            },
-          ),
 
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset("images/bytebank_logo.png"),
+          ButtonBar(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                      child: Text(Constants.AppBarNovaTransfTittleText),
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return FrmDeposito();
+                        }));
+                      })),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                      child: Text(Constants.AppBarNovaTransfTittleText),
+                      onPressed: () {
+                        _showContactList(context);
+                      })),
+            ],
           ),
 
           // este endentamento permite rotação lateral.

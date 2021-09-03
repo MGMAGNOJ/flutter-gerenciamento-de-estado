@@ -1,7 +1,7 @@
 import 'package:alura_crashlytics/components/centered_message.dart';
 import 'package:alura_crashlytics/components/waiting.dart';
 import 'package:alura_crashlytics/http/web_clients/transaction_webclient.dart';
-import 'package:alura_crashlytics/models/transaction.dart';
+import 'package:alura_crashlytics/models/transferencia.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsList extends StatelessWidget {
@@ -15,7 +15,7 @@ class TransactionsList extends StatelessWidget {
       appBar: AppBar(
         title: Text('Transactions'),
       ),
-      body: FutureBuilder<List<Transaction>>(
+      body: FutureBuilder<List<Transferencia>>(
         future: _transactionWebClient.findAll(),
         builder: (context, snapshot) {
           //final List<Transaction>? transactions = snapshot.data;
@@ -29,12 +29,12 @@ class TransactionsList extends StatelessWidget {
             case ConnectionState.done:
               // Verifica se retornou dados e não um 404 por exemplo.
               if (snapshot.hasData) {
-                final List<Transaction>? transactions = snapshot.data;
+                final List<Transferencia>? transactions = snapshot.data;
                 // Verifica  se tem registros.
                 if (transactions != null && transactions.isNotEmpty) {
                   return ListView.builder(
                     itemBuilder: (context, index) {
-                      final Transaction transaction = transactions[index];
+                      final Transferencia transaction = transactions[index];
                       return Card(
                         child: ListTile(
                           leading: Icon(Icons.monetization_on),
