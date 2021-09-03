@@ -1,7 +1,7 @@
 import 'package:alura_crashlytics/database/dao/contatos_dao.dart';
 import 'package:alura_crashlytics/models/contatos.dart';
 import 'package:alura_crashlytics/screens/forms/frm_contato.dart';
-import 'package:alura_crashlytics/screens/forms/frm_transacao.dart';
+import 'package:alura_crashlytics/screens/forms/frm_transferencia.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatefulWidget {
@@ -61,7 +61,7 @@ class _ContactsListState extends State<ContactsList> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => TransactionForm(contact),
+                              builder: (context) => FormTransferencia(contact),
                             ),
                           );
                         },

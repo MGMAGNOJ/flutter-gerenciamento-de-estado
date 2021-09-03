@@ -5,26 +5,22 @@ import 'package:alura_crashlytics/components/response_dialog.dart';
 import 'package:alura_crashlytics/components/waiting.dart';
 import 'package:alura_crashlytics/http/web_clients/transaction_webclient.dart';
 import 'package:alura_crashlytics/models/contatos.dart';
+import 'package:alura_crashlytics/models/listatransferencias.dart';
+import 'package:alura_crashlytics/models/saldo.dart';
 import 'package:alura_crashlytics/models/transferencia.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class TransactionForm extends StatefulWidget {
-  final Contato contato;
-
-  TransactionForm(this.contato);
-
-  @override
-  _TransactionFormState createState() => _TransactionFormState();
-}
-
-class _TransactionFormState extends State<TransactionForm> {
+class FormTransferencia extends StatelessWidget {
   final TextEditingController _valueController = TextEditingController();
   final TransactionWebClient _transactionWebClient = TransactionWebClient();
   final _scaffoldState = GlobalKey<ScaffoldState>();
+  final Contato contato;
 
+  FormTransferencia(this.contato);
 
   // gerador de UUID;
 
@@ -57,7 +53,7 @@ class _TransactionFormState extends State<TransactionForm> {
 
               // Campo do Nome
               Text(
-                widget.contato.nome,
+                contato.nome,
                 style: TextStyle(
                   fontSize: 24.0,
                 ),
@@ -67,7 +63,7 @@ class _TransactionFormState extends State<TransactionForm> {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: Text(
-                  widget.contato.numeroDaConta.toString(),
+                  contato.numeroDaConta.toString(),
                   style: TextStyle(
                     fontSize: 32.0,
                     fontWeight: FontWeight.bold,
@@ -97,7 +93,7 @@ class _TransactionFormState extends State<TransactionForm> {
                         final transactionCreated = Transferencia(
                           transactionId,
                           value,
-                          widget.contato,
+                          contato,
                         );
                         showDialog(
                             context: context,
@@ -131,35 +127,48 @@ class _TransactionFormState extends State<TransactionForm> {
     String password,
     BuildContext context,
   ) async {
-    // Habilita visibilidade do icone de processanndo
-    setState(() {
-      _boolProcessando = true;
-    });
-    // Processa a transação
-    Transferencia? transaction = await _send(
-      transactionCreated,
-      password,
-      context,
-    );
-    // Desabilita visibilidade do icone de processanndo
+    if (transactionCreated.value <=
+        Provider.of<Saldo>(context, listen: false).valor) {
+      // // Habilita visibilidade do icone de processanndo
+      // setState(() {
+      //   _boolProcessando = true;
+      // });
+      // Processa a transação
+      Transferencia? transaction = await _send(
+        transactionCreated,
+        password,
+        context,
+      );
 
-    setState(() {
-      _boolProcessando = false;
-    });
+      // Debita do Saldo
+      if (transaction != null) {
+        //Provider.of<ListaTransferencias>(context, listen: false).add(_transf)
+        Provider.of<Saldo>(context, listen: false).sub(transaction.value);
+      }
 
-    // Mostra mensagem de Sucesso
-    if (transaction != null) {
-      await showDialog(
-          context: context,
-          builder: (contextDialog) {
-            return SuccessDialog("Show");
-          });
-      Navigator.of(context).pop();
+      // // Desabilita visibilidade do icone de processanndo
+      //
+      // setState(() {
+      //   _boolProcessando = false;
+      // });
+
+      // Mostra mensagem de Sucesso
+      if (transaction != null) {
+        await showDialog(
+            context: context,
+            builder: (contextDialog) {
+              return SuccessDialog("Show");
+            });
+
+        Navigator.of(context).pop();
+      }
+    } else {
+      _showFailMessage(context, mensagem: "Saldo Insuficiente");
     }
   }
 
-  Future<Transferencia?> _send(Transferencia transactionCreated, String password,
-      BuildContext context) async {
+  Future<Transferencia?> _send(Transferencia transactionCreated,
+      String password, BuildContext context) async {
     final Transferencia? transaction = await _transactionWebClient
         .save(
       transactionCreated,
@@ -198,9 +207,8 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
-  void _showFailMessage (BuildContext context,
+  void _showFailMessage(BuildContext context,
       {String mensagem = 'Erro desconhecido'}) {
-
     final _snackBar = SnackBar(content: Text(mensagem));
     ScaffoldMessenger.of(context).showSnackBar(_snackBar);
 
@@ -211,8 +219,7 @@ class _TransactionFormState extends State<TransactionForm> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
 
     showDialog(
         context: (context),

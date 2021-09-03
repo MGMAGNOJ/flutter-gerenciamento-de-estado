@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:alura_crashlytics/models/listatransferencias.dart';
 import 'package:alura_crashlytics/models/saldo.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -18,8 +19,15 @@ void main() async {
     print("App in debug mode");
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
     runApp(
-      ChangeNotifierProvider(
-        create: (context) => Saldo(10),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => Saldo(10),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ListaTransferencias(),
+          ),
+        ],
         child: MyApp(),
       ),
     );

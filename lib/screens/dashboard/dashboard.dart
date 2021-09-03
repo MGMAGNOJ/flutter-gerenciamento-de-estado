@@ -25,11 +25,15 @@ class _DashboardState extends State<Dashboard> {
           ),
 
           ButtonBar(
+            alignment: MainAxisAlignment.center,
             children: [
               Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                      child: Text(Constants.AppBarNovaTransfTittleText),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.green)),
+                      child: Text(Constants.AppBarDepositoTittleText),
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
@@ -37,43 +41,41 @@ class _DashboardState extends State<Dashboard> {
                         }));
                       })),
               Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                      child: Text(Constants.AppBarNovaTransfTittleText),
-                      onPressed: () {
-                        _showContactList(context);
-                      })),
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.green)),
+                  child: Text(Constants.AppBarNovaTransfTittleText),
+                  onPressed: () {
+                    _showContactList(context);
+                  },
+                ),
+              ),
             ],
           ),
 
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: [
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green)),
+                  child: Text(Constants.AppBarListaDeTransfTittleText),
+                  onPressed: () {
+                    _showTransferenciasEfetuadas(context);
+                  },
+                ),
+              ),
+            ],
+          ),
           // este endentamento permite rotação lateral.
           // Container.. Height / ListView.. ScrollDirection
-          Container(
-            height: 100,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                Row(
-                  children: [
-                    _FeatureItem(
-                      'Transferencias',
-                      Icons.monetization_on,
-                      onTapFeatureItem: () {
-                        _showContactList(context);
-                      },
-                    ),
-                    _FeatureItem(
-                      'Transações Efetuadas',
-                      Icons.description,
-                      onTapFeatureItem: () {
-                        _showTransferenciasEfetuadas(context);
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
+
         ],
       ),
     );
